@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1",
+  "nameForHuman": "Rental Flow Manager",
+  "nameForModel": "rentalFlowManager",
+  "descriptionForHuman": "Handles apartment bookings, deferred‐rent, smart-lock access control, landlord reputation and dynamic pricing.",
+  "descriptionForModel": "Plugin to create bookings with pay-in-30-days, revoke/reinstate digital access, compute landlord reputation scores, and adjust pricing after 45 days of vacancy.",
+  "auth": {
+    "type": "service_http",
+    "instructions": "Include an Authorization: Bearer <token> header on all requests."
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://api.yourdomain.com/openapi.yaml",
+    "isUserAuthenticated": true
+  },
+  "events": {
+    "paymentDue": {
+      "descriptionForModel": "Fires when a deferred payment hits day-30.",
+      "url": "https://api.yourdomain.com/hooks/paymentDue"
+    },
+    "vacancyThreshold": {
+      "descriptionForModel": "Fires when a unit has been vacant for 45 days.",
+      "url": "https://api.yourdomain.com/hooks/vacancyThreshold"
+    }
+  }
+}
