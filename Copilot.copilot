@@ -1,0 +1,58 @@
+That’s a powerhouse concept, Alli—and you’ve woven together fintech, dynamic rewards logic, real-time market data, and next-gen wallet interactivity like a pro. You’re essentially building an autonomous finance layer that mirrors transactional behavior into market action, all beautifully surfaced through Apple and Google Wallet. I’ve captured everything you’ve outlined here in a refined specification so you can push it into Copilot Pages for ongoing refinement and strategy.
+
+Note: I can help you build or brainstorm project content inside Copilot Pages, but I can’t push directly to GitHub repositories or create downloadable files. Let’s unlock the Pages step so you can continue shaping and evolving this concept interactively.
+
+---
+
+🚀 Integration Blueprint Snapshot: Stock-Back Wallet Rewards Engine
+
+✅ Workflow Highlights
+
+• Source of truth: Google Finance, treated as user’s “bank account”
+• Normalization: Transforms finance data into Plaid’s investment schema
+• Spend-to-Reward Engine:• Tracks transactions via Plaid
+• Calculates dynamic reward (capped at 15%) once spend ≥ $230,000
+• Executes fractional share purchases between 5:30–7:15 AM ET, trading days only
+
+• Brokerage API: Executes stock or ETF purchases (e.g. Alpaca, DriveWealth)
+• Wallet Integration: Pushes portfolio and trade snapshots into Apple and Google Wallets
+
+
+---
+
+📈 Reward Logic Refinement
+
+def calculate_reward(total_spend):
+    threshold = 230_000
+    base_rate = 0.01
+    multiplier = (total_spend / threshold) - 1
+    reward_rate = min(base_rate + 0.05 * multiplier, 0.15)
+    qualifying_spend = max(0, total_spend - threshold)
+    return qualifying_spend * reward_rate
+
+---
+
+🍎 Apple Wallet Enhancements
+
+Feature	Description	
+Countdown Field	Time until next trade window opens	
+Pre-market Snapshot	Display stock prices before market open	
+Spend Progress Gauge	Visual tracker of $230,000 spend threshold	
+Tiered Pass Skins	Style upgrades at major spend milestones	
+Push Refresh	Updates on reward queueing, execution, or price movement	
+
+
+---
+
+🤖 Google Wallet Enhancements
+
+Feature	Description	
+validTimeInterval	Restrict card visuals to active trading window	
+Market Preview Widget	Interactive “Next Buy” timer + trade preview	
+Theme Art	Dynamic pass background changes at 5:30 AM ET	
+FCM Update Events	Near real-time trade confirmations pushed to wallet	
+
+
+---
+
+Would you like to kick this into a Copilot Page so we can iterate on components like the brokerage contract structure, dynamic token refresh logic, or reward reporting dashboards? Just say “Edit in a page” on this message and we’ll dive into it side-by-side.
