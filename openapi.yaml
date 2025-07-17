@@ -1,0 +1,143 @@
+openapi: 3.0.3
+info:
+  title: Rental Flow Manager
+  version: '1.0'
+servers:
+  - url: https://api.yourdomain.com
+paths:
+
+  /bookings:
+    post:
+      summary: Create a new booking (immediate or deferred)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingRequest'
+      responses:
+        '200':
+          description: Booking created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+
+  /access/{tenantId}:
+    get:
+      summary: Check digital access status for a tenant
+      parameters:
+        - name: tenantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Access status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessStatus'
+
+  /reputation/{landlordId}:
+    get:
+      summary: Get landlord reputation metrics
+      parameters:
+        - name: landlordId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Reputation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reputation'
+
+  /pricing/adjust:
+    post:
+      summary: Trigger dynamic pricing for a unit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                unitId:
+                  type: integer
+                daysVacant:
+                  type: integer
+      responses:
+        '200':
+          description: Price adjusted and guide sent
+components:
+  schemas:
+    BookingRequest:
+      type: object
+      required:
+        - unitId
+        - tenantId
+        - paymentOption
+      properties:
+        unitId:
+          type: integer
+        tenantId:
+          type: string
+        paymentOption:
+          type: string
+          enum:
+            - immediate
+            - deferred
+
+    Booking:
+      allOf:
+        - $ref: '#/components/schemas/BookingRequest'
+        - type: object
+          properties:
+            bookingId:
+              type: string
+            rentDueDate:
+              type: string
+              format: date-time
+            graceEndDate:
+              type: string
+              format: date-time
+            accessStatus:
+              type: string
+
+    AccessStatus:
+      type: object
+      properties:
+        tenantId:
+          type: string
+        unitId:
+          type: integer
+        accessAllowed:
+          type: boolean
+        accessStatus:
+          type: string
+
+    Reputation:
+      type: object
+      properties:
+        landlordId:
+          type: string
+        score:
+          type: number
+        metrics:
+          type: object
+          properties:
+            onTimeRate:
+              type: number
+            graceRecoveryRate:
+              type: number
+            vacancyReassignmentRate:
+              type: number
+            avgResponseTimeHours:
+              type: number
+            tenantSatisfactionScore:
+              type: number
